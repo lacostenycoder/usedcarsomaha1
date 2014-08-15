@@ -4,6 +4,10 @@ require 'smarter_csv'
 # Necessary for using the "type column"
 self.inheritance_column = nil
 
+  def year_make_model
+    [self.year, self.make, self.model].join(" ")
+  end
+
   def self.import(file)
     # vehicles = SmarterCSV.process(file.path)
     # f = File.open(file.path, "r:bom|utf-8")
