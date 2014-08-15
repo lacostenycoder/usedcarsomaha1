@@ -19,7 +19,6 @@ development:
   encoding: unicode
   database: used_cars_omaha_development
   pool: 5
-  username: used_cars_omaha
   password:
 
   # Connect on a TCP socket. Omitted by default since the client uses a
@@ -48,7 +47,6 @@ test:
   encoding: unicode
   database: used_cars_omaha_test
   pool: 5
-  username: used_cars_omaha
   password:
 
 production:
@@ -56,5 +54,4 @@ production:
   encoding: unicode
   database: used_cars_omaha_production
   pool: 5
-  username: used_cars_omaha
   password:
