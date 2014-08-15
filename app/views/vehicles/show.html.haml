@@ -1,0 +1,165 @@
+- model_class = Vehicle
+.page-header
+  %h1=t '.title', :default => model_class.model_name.human.titleize
+
+%p
+  %strong= model_class.human_attribute_name(:dealer_id) + ':'
+  %br
+  = @vehicle.dealer_id
+%p
+  %strong= model_class.human_attribute_name(:vin) + ':'
+  %br
+  = @vehicle.vin
+%p
+  %strong= model_class.human_attribute_name(:stock_number) + ':'
+  %br
+  = @vehicle.stockno
+%p
+  %strong= model_class.human_attribute_name(:year) + ':'
+  %br
+  = @vehicle.year
+%p
+  %strong= model_class.human_attribute_name(:make) + ':'
+  %br
+  = @vehicle.make
+%p
+  %strong= model_class.human_attribute_name(:model) + ':'
+  %br
+  = @vehicle.model
+%p
+  %strong= model_class.human_attribute_name(:model_code) + ':'
+  %br
+  = @vehicle.model_code
+%p
+  %strong= model_class.human_attribute_name(:trim) + ':'
+  %br
+  = @vehicle.trim
+%p
+  %strong= model_class.human_attribute_name(:bodystyle) + ':'
+  %br
+  = @vehicle.bodystyle
+%p
+  %strong= model_class.human_attribute_name(:transmission) + ':'
+  %br
+  = @vehicle.transmission
+%p
+  %strong= model_class.human_attribute_name(:drive_train) + ':'
+  %br
+  = @vehicle.drive_train
+%p
+  %strong= model_class.human_attribute_name(:doors) + ':'
+  %br
+  = @vehicle.doors
+%p
+  %strong= model_class.human_attribute_name(:exterior_color) + ':'
+  %br
+  = @vehicle.exterior_color
+%p
+  %strong= model_class.human_attribute_name(:interior_color) + ':'
+  %br
+  = @vehicle.interior_color
+%p
+  %strong= model_class.human_attribute_name(:truck_cab) + ':'
+  %br
+  = @vehicle.truck_cab
+%p
+  %strong= model_class.human_attribute_name(:truck_bed) + ':'
+  %br
+  = @vehicle.truck_bed
+%p
+  %strong= model_class.human_attribute_name(:msrp) + ':'
+  %br
+  = @vehicle.msrp
+%p
+  %strong= model_class.human_attribute_name(:invoice) + ':'
+  %br
+  = @vehicle.invoice
+%p
+  %strong= model_class.human_attribute_name(:price) + ':'
+  %br
+  = @vehicle.price
+%p
+  %strong= model_class.human_attribute_name(:wholesale_price) + ':'
+  %br
+  = @vehicle.wholesale_price
+%p
+  %strong= model_class.human_attribute_name(:retail_price) + ':'
+  %br
+  = @vehicle.retail_price
+%p
+  %strong= model_class.human_attribute_name(:sale_price) + ':'
+  %br
+  = @vehicle.sale_price
+%p
+  %strong= model_class.human_attribute_name(:mileage) + ':'
+  %br
+  = @vehicle.mileage
+%p
+  %strong= model_class.human_attribute_name(:comments) + ':'
+  %br
+  = @vehicle.comments
+%p
+  %strong= model_class.human_attribute_name(:options) + ':'
+  %br
+  = @vehicle.options
+%p
+  %strong= model_class.human_attribute_name(:images) + ':'
+  %br
+  = @vehicle.images
+%p
+  %strong= model_class.human_attribute_name(:type) + ':'
+  %br
+  = @vehicle.type
+%p
+  %strong= model_class.human_attribute_name(:certified) + ':'
+  %br
+  = @vehicle.certified
+%p
+  %strong= model_class.human_attribute_name(:engine) + ':'
+  %br
+  = @vehicle.engine
+%p
+  %strong= model_class.human_attribute_name(:engine_size) + ':'
+  %br
+  = @vehicle.engine_size
+%p
+  %strong= model_class.human_attribute_name(:fuel) + ':'
+  %br
+  = @vehicle.fuel
+%p
+  %strong= model_class.human_attribute_name(:dealership) + ':'
+  %br
+  = @vehicle.dealership
+%p
+  %strong= model_class.human_attribute_name(:dealership_address1) + ':'
+  %br
+  = @vehicle.dealership_address1
+%p
+  %strong= model_class.human_attribute_name(:dealership_address_2) + ':'
+  %br
+  = @vehicle.dealership_address2
+%p
+  %strong= model_class.human_attribute_name(:dealership_city) + ':'
+  %br
+  = @vehicle.dealership_city
+%p
+  %strong= model_class.human_attribute_name(:dealership_state) + ':'
+  %br
+  = @vehicle.dealership_state
+%p
+  %strong= model_class.human_attribute_name(:dealership_postalcode) + ':'
+  %br
+  = @vehicle.dealership_postalcode
+%p
+  %strong= model_class.human_attribute_name(:dealership_phone) + ':'
+  %br
+  = @vehicle.dealership_phone
+%p
+  %strong= model_class.human_attribute_name(:dealership_url) + ':'
+  %br
+  = @vehicle.dealership_url
+
+.form-actions
+  = link_to t('.back', :default => t("helpers.links.back")), vehicles_path, :class => 'btn'
+  = link_to t('.edit', :default => t("helpers.links.edit")), edit_vehicle_path(@vehicle), :class => 'btn'
+  = link_to t('.destroy', :default => t("helpers.links.destroy")), vehicle_path(@vehicle), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger'

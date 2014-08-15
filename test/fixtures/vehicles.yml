@@ -1,0 +1,85 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  dealer_id: MyString
+  vin: MyString
+  stock_number: MyString
+  year: 1
+  make: MyString
+  model: MyString
+  model_code: MyString
+  trim: MyString
+  bodystyle: MyString
+  transmission: MyString
+  drive_train: MyString
+  doors: MyString
+  exterior_color: MyString
+  interior_color: MyString
+  truck_cab: MyString
+  truck_bed: MyString
+  msrp: MyString
+  invoice: MyString
+  price: MyString
+  wholesale_price: MyString
+  retail_price: MyString
+  sale_price: MyString
+  mileage: MyString
+  comments: MyText
+  options: MyText
+  images: MyText
+  type: 
+  certified: MyString
+  engine: MyString
+  engine_size: MyString
+  fule: MyString
+  dealership: MyString
+  dealership_address1: MyString
+  dealership_address_2: MyString
+  dealership_city: MyString
+  dealership_state: MyString
+  dealership_postalcode: MyString
+  dealership_country: MyString
+  dealership_phone: MyString
+  dealership_url: MyString
+
+two:
+  dealer_id: MyString
+  vin: MyString
+  stock_number: MyString
+  year: 1
+  make: MyString
+  model: MyString
+  model_code: MyString
+  trim: MyString
+  bodystyle: MyString
+  transmission: MyString
+  drive_train: MyString
+  doors: MyString
+  exterior_color: MyString
+  interior_color: MyString
+  truck_cab: MyString
+  truck_bed: MyString
+  msrp: MyString
+  invoice: MyString
+  price: MyString
+  wholesale_price: MyString
+  retail_price: MyString
+  sale_price: MyString
+  mileage: MyString
+  comments: MyText
+  options: MyText
+  images: MyText
+  type: 
+  certified: MyString
+  engine: MyString
+  engine_size: MyString
+  fule: MyString
+  dealership: MyString
+  dealership_address1: MyString
+  dealership_address_2: MyString
+  dealership_city: MyString
+  dealership_state: MyString
+  dealership_postalcode: MyString
+  dealership_country: MyString
+  dealership_phone: MyString
+  dealership_url: MyString
