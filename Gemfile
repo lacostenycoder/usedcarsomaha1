@@ -25,7 +25,7 @@ gem 'coffee-rails', '~> 4.0.0'
 # Use haml by default
 gem 'haml-rails'
 
-gem 'rails_admin'
+gem 'rails_admin', path: "~/Dropbox/Projects/rails_admin"
 gem "rails_admin_import"
 
 # Use jquery as the JavaScript library
@@ -37,17 +37,31 @@ gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
 
+gem 'devise'
+gem 'cancancan'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
 end
 
-group :development do
+group :development, :test do
   gem 'jazz_hands', github: 'nixme/jazz_hands', branch: 'bring-your-own-debugger'
   gem 'pry-byebug'
   gem 'binding_of_caller'
   gem 'better_errors'
   gem 'guard-livereload', require: false
+  gem 'rb-fsevent' if `uname` =~ /Darwin/
+
+  gem 'rspec-rails'
+  gem 'factory_girl_rails'
+end
+
+group :test do
+  gem 'database_cleaner'
+  gem 'spring-commands-rspec'
+  gem 'guard-rspec'
+  gem 'capybara'
 end
 
 # Use ActiveModel has_secure_password

@@ -1,9 +1,18 @@
 UsedCarsOmaha::Application.routes.draw do
+  # Devise
+
+  # Rails Admin
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
+
+  # Resources
   resources :vehicles do
     collection {post :import}
   end
+
+  # Root
   root 'vehicles#index'
+
+  devise_for :users
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
