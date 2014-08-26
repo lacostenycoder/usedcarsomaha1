@@ -8,6 +8,11 @@
       %th= model_class.human_attribute_name(:name)
       %th= model_class.human_attribute_name(:website_url)
       %th= model_class.human_attribute_name(:email)
+      %th= model_class.human_attribute_name(:street_address_1)
+      %th= model_class.human_attribute_name(:street_address_2)
+      %th= model_class.human_attribute_name(:city)
+      %th= model_class.human_attribute_name(:state)
+      %th= model_class.human_attribute_name(:zip_code)
       %th= model_class.human_attribute_name(:created_at)
       %th=t '.actions', :default => t("helpers.actions")
   %tbody
@@ -17,6 +22,11 @@
         %td= dealership.name
         %td= dealership.website_url
         %td= dealership.email
+        %td= dealership.street_address_1
+        %td= dealership.street_address_2
+        %td= dealership.city
+        %td= dealership.state
+        %td= dealership.zip_code
         %td=l dealership.created_at
         %td
           = link_to t('.edit', :default => t("helpers.links.edit")), edit_dealership_path(dealership), :class => 'btn btn-mini'

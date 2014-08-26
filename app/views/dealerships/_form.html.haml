@@ -11,6 +11,26 @@
     = f.label :email, :class => 'control-label'
     .controls
       = f.text_field :email, :class => 'text_field'
+  .control-group
+    = f.label :street_address_1, :class => 'control-label'
+    .controls
+      = f.text_field :street_address_1, :class => 'text_field'
+  .control-group
+    = f.label :street_address_2, :class => 'control-label'
+    .controls
+      = f.text_field :street_address_2, :class => 'text_field'
+  .control-group
+    = f.label :city, :class => 'control-label'
+    .controls
+      = f.text_field :city, :class => 'text_field'
+  .control-group
+    = f.label :state, :class => 'control-label'
+    .controls
+      = f.text_field :state, :class => 'text_field'
+  .control-group
+    = f.label :zip_code, :class => 'control-label'
+    .controls
+      = f.text_field :zip_code, :class => 'text_field'
   .form-actions
     = f.submit nil, :class => 'btn btn-primary'
     = link_to t('.cancel', :default => t("helpers.links.cancel")), dealerships_path, :class => 'btn'
