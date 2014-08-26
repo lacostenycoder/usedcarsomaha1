@@ -51,7 +51,6 @@ group :development, :test do
   gem 'binding_of_caller'
   gem 'better_errors'
   gem 'guard-livereload', require: false
-  gem 'rb-fsevent' if `uname` =~ /Darwin/
 
   gem 'rspec-rails'
   gem 'factory_girl_rails'
@@ -62,6 +61,12 @@ group :test do
   gem 'spring-commands-rspec'
   gem 'guard-rspec'
   gem 'capybara'
+end
+
+# Darwin group necessary for heroku
+# http://www.johnplummer.com/rails/heroku-error-conditional-rbfsevent-gem.html
+group :test, :darwin do
+  gem 'rb-fsevent'
 end
 
 # Use ActiveModel has_secure_password
