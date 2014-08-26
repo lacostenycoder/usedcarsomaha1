@@ -15,8 +15,9 @@ GIT
       pry-stack_explorer (~> 0.4.9)
       railties (>= 3.0, < 5.0)
 
-PATH
-  remote: ~/Dropbox/Projects/rails_admin
+GIT
+  remote: https://github.com/sferik/rails_admin
+  revision: 5dbd480e9daa39df713ccd9e199d807c958ec188
   specs:
     rails_admin (0.6.3)
       builder (~> 3.1)

@@ -25,7 +25,8 @@ gem 'coffee-rails', '~> 4.0.0'
 # Use haml by default
 gem 'haml-rails'
 
-gem 'rails_admin', path: "~/Dropbox/Projects/rails_admin"
+# git is necessary until a new version incorporates the inet fix
+gem 'rails_admin', git:'https://github.com/sferik/rails_admin'
 gem "rails_admin_import"
 
 # Use jquery as the JavaScript library
