@@ -6,7 +6,8 @@
   - @vehicles.each do |vehicle|
     %li.span3
       .thumbnail
-        = image_tag vehicle.images.split("|").first
+        - if vehicle.images.present?
+          = image_tag vehicle.images.split("|").first
         %h3= vehicle.year_make_model
         %p= vehicle.comments
         =link_to "View more", vehicle_path(vehicle), class: 'btn btn-primary'
