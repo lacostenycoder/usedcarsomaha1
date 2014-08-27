@@ -34,7 +34,7 @@ RailsAdmin.config do |config|
     # history_show
   end
 
-  config.model 'User' do
+  config.model User do
     edit do
       field :email
       field :password
@@ -43,5 +43,16 @@ RailsAdmin.config do |config|
       
       # exclude_fields :last_sign_in_ip, :current_sign_in_ip
     end
+  end
+
+  config.model Dealership do
+    configure :name do 
+      label 'Dealership Name'
+    end
+
+    configure :email do
+      label 'Leads email'
+    end
+
   end
 end

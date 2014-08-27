@@ -5,4 +5,8 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   belongs_to :dealership
+
+  def name
+    email if email.present?
+  end
 end
