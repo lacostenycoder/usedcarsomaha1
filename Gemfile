@@ -9,9 +9,6 @@ gem 'pg'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
 
-# Heroku gems
-gem 'rails_12factor'
-
 # Bootstrap gems
 gem "therubyracer"
 gem "less-rails" #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
@@ -51,25 +48,34 @@ group :doc do
 end
 
 group :development, :test do
-  gem 'jazz_hands', github: 'nixme/jazz_hands', branch: 'bring-your-own-debugger'
-  gem 'pry-byebug'
+  gem 'pry'
   gem 'binding_of_caller'
   gem 'better_errors'
+
+  gem 'growl'
+  gem 'guard-ctags-bundler'
   gem 'guard-livereload', require: false
+  gem 'guard-bundler', require: false
 
   gem 'rspec-rails'
-  gem 'factory_girl_rails'
-end
+  gem 'rspec'
+  gem 'rspec-instafail'
 
-group :development do
+  gem 'factory_girl_rails'
+
   gem 'spring'
+  gem 'spring-commands-rspec'
 end
 
 group :test do
   gem 'database_cleaner'
-  gem 'spring-commands-rspec'
   gem 'guard-rspec'
   gem 'capybara'
+end
+
+group :production do
+  # Heroku gems
+  gem 'rails_12factor'
 end
 
 # Darwin group necessary for heroku
