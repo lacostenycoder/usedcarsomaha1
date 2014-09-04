@@ -53,6 +53,9 @@ GEM
       erubis (>= 2.6.6)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
+    bootstrap-kaminari-views (0.0.3)
+      kaminari (>= 0.13)
+      rails (>= 3.1)
     builder (3.2.2)
     cancancan (1.9.2)
     capybara (2.4.1)
@@ -288,6 +291,7 @@ PLATFORMS
 DEPENDENCIES
   better_errors
   binding_of_caller
+  bootstrap-kaminari-views
   cancancan
   capybara
   coffee-rails (~> 4.0.0)
@@ -302,6 +306,7 @@ DEPENDENCIES
   haml-rails
   jbuilder (~> 1.2)
   jquery-rails
+  kaminari
   less-rails
   money
   pg
