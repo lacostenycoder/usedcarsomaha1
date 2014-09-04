@@ -21,4 +21,6 @@
         .span7
           %p.bold= "Check Availability: " + v.dealership_phone if v.dealership_phone
   %hr
-= paginate(@vehicles, theme: 'twitter-bootstrap')
+
+.pull-right
+  = paginate(@vehicles, theme: 'twitter-bootstrap')
