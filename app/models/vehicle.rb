@@ -1,11 +1,13 @@
 class Vehicle < ActiveRecord::Base
 require 'smarter_csv'
 
+# belongs_to :dealership
+
 # Necessary for using the "type column"
 self.inheritance_column = nil
 
-  def year_make_model
-    [self.year, self.make, self.model].join(" ")
+  def year_make_model_trim
+    [self.year, self.make, self.model, self.trim].join(" ")
   end
 
   def self.import(file)

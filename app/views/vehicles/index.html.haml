@@ -1,13 +1,23 @@
-- model_class = Vehicle
 .page-header
-  %h1=t '.title', :default => model_class.model_name.human.pluralize.titleize
+  %h1 Used Cars Omaha
 
-%ul.thumbnails
-  - @vehicles.each do |vehicle|
-    %li.span3
-      .thumbnail
-        - if vehicle.images.present?
-          = image_tag vehicle.images.split("|").first
-        %h3= vehicle.year_make_model
-        %p= vehicle.comments
-        =link_to "View more", vehicle_path(vehicle), class: 'btn btn-primary'
+-@vehicles.each do |v|
+  .row-fluid.vehicle_row_item
+    .span3 
+      -if v.images.present?
+        = image_tag v.images.split("|").first
+    .span8.offset1
+      .row-fluid
+        .span12
+          %h3= v.year_make_model_trim
+      .row-fluid
+        .span3
+          %p.price= "$" + v.price if v.price
+        .span6
+          %p= v.mileage + " Miles" if v.mileage
+      .row-fluid
+        .span5
+          %p= "Dealer: " + v.dealership if v.dealership
+        .span7
+          %p.bold= "Check Availability: " + v.dealership_phone if v.dealership_phone
+  %hr

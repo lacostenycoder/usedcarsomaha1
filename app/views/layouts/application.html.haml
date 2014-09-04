@@ -4,7 +4,8 @@
     %meta(charset="utf-8")
     %meta(http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1")
     %meta(name="viewport" content="width=device-width, initial-scale=1.0")
-    %title= content_for?(:title) ? yield(:title) : "UsedCarsOmaha"
+    %meta(name="Description" content="Official site for searching and browsing used cars, trucks, SUV’s, and minivans for sale in the Omaha metro area.")
+    %title= content_for?(:title) ? yield(:title) : "Used Cars for Sale in Omaha NE / UsedCarsOmaha.biz"
     = csrf_meta_tags
     / Le HTML5 shim, for IE6-8 support of HTML elements
     /[if lt IE 9]
@@ -26,7 +27,7 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          %a.brand(href="/") Used Cars Omaha
+          %a.brand(href="/") UsedCarsOmaha.biz
           .container.nav-collapse
             %ul.nav
               %li= link_to "Admin Panel", rails_admin_path, method: :get
@@ -34,17 +35,6 @@
     .container
 
       .row
-        .span9
+        .span12
           = bootstrap_flash
           = yield
-        .span3
-          .well.sidebar-nav
-            %h3 Sidebar
-            %ul.nav.nav-list
-              %li.nav-header Sidebar
-              %li= link_to "Link 1", "/path1"
-              %li= link_to "Link 2", "/path2"
-              %li= link_to "Link 3", "/path3"
-    
-      %footer
-        %p &copy; Company 2014

@@ -16,6 +16,8 @@ gem "twitter-bootstrap-rails"
 
 gem 'smarter_csv'
 
+gem 'money'
+
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 
