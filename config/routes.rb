@@ -4,7 +4,10 @@ UsedCarsOmaha::Application.routes.draw do
 
   # Resources
   resources :vehicles do
-    collection {post :import}
+    collection do 
+      post :import
+      get 'search', as: 'search'
+    end
   end
 
   resources :dealerships

@@ -33,8 +33,32 @@
               %li= link_to "Admin Panel", rails_admin_path, method: :get
 
     .container
-
-      .row
-        .span12
+      .row-fluid
+        .span3
+          - years = Vehicle.all.map(&:year).sort.reverse
+          - years_uniq = years.uniq
+          - years_with_count = years.each_with_object(Hash.new(0)){|word,counts| counts[word] += 1}
+          .well
+            %legend Search
+            = form_for :search, url: search_vehicles_path, method: :get, class: 'form-inline' do |f|
+              = f.label :year
+              .row-fluid
+                .span5
+                  = f.select :start_year, years_uniq, class: 'input-small'
+                .span1
+                  To
+                .span5
+                  = f.select :end_year, years_uniq
+              = f.submit "Search", class: "btn btn-primary pull-right"
+          .well
+            %legend Year
+            - years_with_count.each do |year,count|
+              = link_to "#{year}(#{count})", search_vehicles_path(search: {year: year})
+              %br
+        .span9
           = bootstrap_flash
           = yield
+
+
+:coffee
+

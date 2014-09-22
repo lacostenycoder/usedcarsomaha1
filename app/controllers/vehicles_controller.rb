@@ -12,6 +12,24 @@ class VehiclesController < ApplicationController
   def show
   end
 
+  def search
+    if params[:search] && params[:search][:start_year].present?
+      start_year = params[:search][:start_year].to_i
+    else
+      start_year = 1900
+    end
+    if params[:search] && params[:search][:end_year].present?
+      end_year = params[:search][:end_year].to_i
+    else
+      end_year = 2100
+    end
+    range = start_year..end_year
+    range = range.map(&:to_s)
+    @vehicles = Vehicle.where(year: range).page(params[:page])
+
+    render action: "index"
+  end
+
   # GET /vehicles/new
   def new
     @vehicle = Vehicle.new
