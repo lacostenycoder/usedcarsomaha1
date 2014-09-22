@@ -53,7 +53,7 @@
           .well
             %legend Year
             - years_with_count.each do |year,count|
-              = link_to "#{year}(#{count})", search_vehicles_path(search: {year: year})
+              = link_to "#{year}(#{count})", search_vehicles_path(search: {start_year: year, end_year: year})
               %br
         .span9
           = bootstrap_flash
