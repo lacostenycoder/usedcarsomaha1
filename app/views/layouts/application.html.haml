@@ -38,10 +38,19 @@
           - years = Vehicle.all.map(&:year).sort.reverse
           - years_uniq = years.uniq
           - years_with_count = years.each_with_object(Hash.new(0)){|word,counts| counts[word] += 1}
+          - make_uniq = Vehicle.all.map(&:make).sort.uniq
+
+
           .well
             %legend Search
             = form_for :search, url: search_vehicles_path, method: :get, class: 'form-inline' do |f|
               = f.select :price, [['Under $5,000',5000],['Under $10,000',10000],['Under $15,000',15000], ['Under $20,000', 20000], ['Under $25,000', 25000], ['Under $30,000', 30000], ['More than $30,000', 30001]]
+              = f.select :make, make_uniq
+              - if params[:search] && params[:search][:make]
+                - models = Vehicle.where(:make => params[:search][:make]).all.map(&:model).sort.uniq
+                = f.select :model, models
+              - else
+                = f.select nil, search_vehicles_path
               = f.label :year
               .row-fluid
                 .span5
@@ -53,19 +62,19 @@
               = f.submit "Search", class: "btn btn-primary pull-right"
           .well
             %legend Price
-            = link_to "Under $5,000", search_vehicles_path(search: {:price => 5000})
+            = link_to "Under $5,000(#{Vehicle.where("price < 5000").count})", search_vehicles_path(search: {:price => 5000})
             %br
-            = link_to "Under $10,000", search_vehicles_path(search: {:price => 10000})
+            = link_to "Under $10,000(#{Vehicle.where("price < 10000").count})", search_vehicles_path(search: {:price => 10000})
             %br
-            = link_to "Under $15,000", search_vehicles_path(search: {:price => 15000})
+            = link_to "Under $15,000(#{Vehicle.where("price < 15000").count})", search_vehicles_path(search: {:price => 15000})
             %br
-            = link_to "Under $20,000", search_vehicles_path(search: {:price => 20000})
+            = link_to "Under $20,000(#{Vehicle.where("price < 20000").count})", search_vehicles_path(search: {:price => 20000})
             %br
-            = link_to "Under $25,000", search_vehicles_path(search: {:price => 25000})
+            = link_to "Under $25,000(#{Vehicle.where("price < 25000").count})", search_vehicles_path(search: {:price => 25000})
             %br
-            = link_to "Under $30,000", search_vehicles_path(search: {:price => 30000})
+            = link_to "Under $30,000(#{Vehicle.where("price < 30000").count})", search_vehicles_path(search: {:price => 30000})
             %br
-            = link_to "Over $30,000", search_vehicles_path(search: {:price => 30001})
+            = link_to "Over $30,000(#{Vehicle.where("price < 999999").count})", search_vehicles_path(search: {:price => 30001})
           .well
             %legend Year
             - years_with_count.each do |year,count|
@@ -73,27 +82,46 @@
               %br
           .well
             %legend Mileage
-            = link_to "Under 10,000", search_vehicles_path(search: {:mileage => 10000})
+            = link_to "Under 10,000(#{Vehicle.where("mileage < 10000").count})", search_vehicles_path(search: {:mileage => 10000})
             %br
-            = link_to "Under 20,000", search_vehicles_path(search: {:mileage => 20000})
+            = link_to "Under 20,000(#{Vehicle.where("mileage < 20000").count})", search_vehicles_path(search: {:mileage => 20000})
             %br
-            = link_to "Under 30,000", search_vehicles_path(search: {:mileage => 30000})
+            = link_to "Under 30,000(#{Vehicle.where("mileage < 30000").count})", search_vehicles_path(search: {:mileage => 30000})
             %br
-            = link_to "Under 40,000", search_vehicles_path(search: {:mileage => 40000})
+            = link_to "Under 40,000(#{Vehicle.where("mileage < 40000").count})", search_vehicles_path(search: {:mileage => 40000})
             %br
-            = link_to "Under 50,000", search_vehicles_path(search: {:mileage => 50000})
+            = link_to "Under 50,000(#{Vehicle.where("mileage < 50000").count})", search_vehicles_path(search: {:mileage => 50000})
             %br
-            = link_to "Under 60,000", search_vehicles_path(search: {:mileage => 60000})
+            = link_to "Under 60,000(#{Vehicle.where("mileage < 60000").count})", search_vehicles_path(search: {:mileage => 60000})
             %br
-            = link_to "Under 70,000", search_vehicles_path(search: {:mileage => 70000})
+            = link_to "Under 70,000(#{Vehicle.where("mileage < 70000").count})", search_vehicles_path(search: {:mileage => 70000})
             %br
-            = link_to "Under 80,000", search_vehicles_path(search: {:mileage => 80000})
+            = link_to "Under 80,000(#{Vehicle.where("mileage < 80000").count})", search_vehicles_path(search: {:mileage => 80000})
             %br
-            = link_to "Under 90,000", search_vehicles_path(search: {:mileage => 90000})
+            = link_to "Under 90,000(#{Vehicle.where("mileage < 90000").count})", search_vehicles_path(search: {:mileage => 90000})
             %br
-            = link_to "Under 100,000", search_vehicles_path(search: {:mileage => 100000})
+            = link_to "Under 100,000(#{Vehicle.where("mileage < 100000").count})", search_vehicles_path(search: {:mileage => 100000})
             %br
-            = link_to "Over 100,000", search_vehicles_path(search: {:mileage => 100001})
+            = link_to "Over 100,000(#{Vehicle.where("mileage > 100000").count})", search_vehicles_path(search: {:mileage => 100001})
+
+          .well
+            %legend Body Style
+            %br
+            = link_to "Convertible(#{Vehicle.where(:bodystyle => 'Convertible').count})", search_vehicles_path(search: {:bodystyle => "Convertible"})
+            %br
+            = link_to "Coupe(#{Vehicle.where(:bodystyle => 'Coupe').count})", search_vehicles_path(search: {:bodystyle => "Coupe"})
+            %br
+            = link_to "Pickup Truck(#{Vehicle.where(:bodystyle => 'Pickup Truck').count})", search_vehicles_path(search: {:bodystyle => "Pickup Truck"})
+            %br
+            = link_to "Van(#{Vehicle.where(:bodystyle => 'Van').count})", search_vehicles_path(search: {:bodystyle => "Van"})
+            %br
+            = link_to "Sedan(#{Vehicle.where(:bodystyle => 'Sedan').count})", search_vehicles_path(search: {:bodystyle => "Sedan"})
+            %br
+            = link_to "SUV(#{Vehicle.where(:bodystyle => 'SUV').count})", search_vehicles_path(search: {:bodystyle => "SUV"})
+            %br
+            = link_to "Wagon(#{Vehicle.where(:bodystyle => 'Wagon').count})", search_vehicles_path(search: {:bodystyle => "Wagon"})
+            %br
+
         .span9
           = bootstrap_flash
           = yield

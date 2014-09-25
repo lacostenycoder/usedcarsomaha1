@@ -33,6 +33,13 @@ class VehiclesController < ApplicationController
     else
       mileage = 999999
     end
+    if params[:search] && params[:search][:make]
+      make = params[:search][:make]
+    end
+    if params[:search] && params[:search][:model]
+      model = params[:search][:make]
+    end
+
     range = start_year..end_year
     range = range.map(&:to_s)
     if params[:search][:price].to_i == 30001
@@ -41,9 +48,7 @@ class VehiclesController < ApplicationController
     if params[:search][:mileage].to_i == 100001
       params[:search][:mileage] = 999999
     end
-
-    @vehicles = Vehicle.where(year: range).where("price < ? AND mileage < ?", price, mileage).page(params[:page])
-
+    @vehicles = Vehicle.where(year: range).where("price < ? AND mileage < ? AND bodystyle == ? AND make == ? AND model == ?", price, mileage, params[:search][:bodystyle], make, model).page(params[:page])
     render action: "index"
   end
 
