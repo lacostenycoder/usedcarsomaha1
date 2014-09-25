@@ -52,6 +52,21 @@
                   = f.select :end_year, years_uniq
               = f.submit "Search", class: "btn btn-primary pull-right"
           .well
+            %legend Price
+            = link_to "Under $5,000", search_vehicles_path(:price => 5000)
+            %br
+            = link_to "Under $10,000", search_vehicles_path(:price => 10000)
+            %br
+            = link_to "Under $15,000", search_vehicles_path(:price => 15000)
+            %br
+            = link_to "Under $20,000", search_vehicles_path(:price => 20000)
+            %br
+            = link_to "Under $25,000", search_vehicles_path(:price => 25000)
+            %br
+            = link_to "Under $30,000", search_vehicles_path(:price => 30000)
+            %br
+            = link_to "Over $30,000", search_vehicles_path(:price => 30001)
+          .well
             %legend Year
             - years_with_count.each do |year,count|
               = link_to "#{year}(#{count})", search_vehicles_path(search: {start_year: year, end_year: year})

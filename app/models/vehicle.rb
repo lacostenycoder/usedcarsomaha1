@@ -20,6 +20,8 @@ self.inheritance_column = nil
       elsif vehicle.count > 1
         raise "There is more than 1 vehicle with the original_id of #{array.first[:original_id]}"
       else
+        #attempt to avoid a typing error by converting the price to an integer before creating
+        array[:price] = array[:price].to_i
         Vehicle.create( array.first )
       end
 
