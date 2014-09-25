@@ -32,7 +32,7 @@ class VehiclesController < ApplicationController
       params[:search][:mileage] = 999999
     end
 
-    @vehicles = Vehicle.where(year: range).where("price < ?", params[:search][:price]).where("mileage < ?", params[:search][:mileage].to_i).page(params[:page])
+    @vehicles = Vehicle.where(year: range).where("price < ?", params[:search][:price]).where("mileage < ?", params[:search][:mileage]).page(params[:page])
 
     render action: "index"
   end
