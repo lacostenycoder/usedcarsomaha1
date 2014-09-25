@@ -30,8 +30,10 @@
           %a.brand(href="/") UsedCarsOmaha.biz
           .container.nav-collapse
             %ul.nav
-              %li= link_to "Admin Panel", rails_admin_path, method: :get
-
+              - if signed_in?
+                %li= link_to "Admin Panel", rails_admin_path, method: :get
+              - else
+                %li= link_to 'Sign In', user_session_path
     .container
       .row-fluid
         .span3
@@ -61,4 +63,3 @@
 
 
 :coffee
-
