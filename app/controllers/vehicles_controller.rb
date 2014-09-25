@@ -48,7 +48,7 @@ class VehiclesController < ApplicationController
     if params[:search][:mileage].to_i == 100001
       params[:search][:mileage] = 999999
     end
-    @vehicles = Vehicle.where(year: range).where("price < ? AND mileage < ? AND bodystyle == ? AND make == ? AND model == ?", price, mileage, params[:search][:bodystyle], make, model).page(params[:page])
+    @vehicles = Vehicle.where(year: range).where("price < ? AND mileage < ? AND bodystyle = ? AND make = ? AND model = ?", price, mileage, params[:search][:bodystyle], make, model).page(params[:page])
     render action: "index"
   end
 
