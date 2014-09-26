@@ -53,6 +53,8 @@ class VehiclesController < ApplicationController
 
     if params[:search][:model].nil?
       model = Vehicle.select(:model).distinct(:all)
+    else
+      model = params[:search][:model]
     end
     range = start_year..end_year
     range = range.map(&:to_s)
