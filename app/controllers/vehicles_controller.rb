@@ -39,9 +39,6 @@ class VehiclesController < ApplicationController
     if params[:search] && params[:search][:model]
       model = params[:search][:model]
     end
-    if params[:search] && params[:search][:make]
-      make = params[:search][:make]
-    end
     if params[:search] && params[:search][:bodystyle]
       bodystyle = params[:search][:bodystyle]
     end
