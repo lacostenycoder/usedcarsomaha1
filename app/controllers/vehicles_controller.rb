@@ -42,6 +42,9 @@ class VehiclesController < ApplicationController
     if params[:search] && params[:search][:bodystyle]
       bodystyle = params[:search][:bodystyle]
     end
+    if params[:search] && params[:search][:sort]
+      sort = params[:search][:sort]
+    end
     # if params[:search][:make].nil?
     #   make = Vehicle.select(:make).distinct(:all)
     # end
@@ -56,36 +59,44 @@ class VehiclesController < ApplicationController
     @vehicles = Vehicle.where(year: range)
 
     if mileage == 100001
-      @vehicles = @vehicles.where("mileage > 100000")
+      @vehicles = @vehicles.where("mileage >= 100000")
     elsif mileage == 'All'
       @vehicles = @vehicles.where("mileage >= 0")
     else
       @vehicles = @vehicles.where("mileage < ?", mileage)
     end
     if price == 30001
-      @vehicles = @vehicles.where("price > 30000")
+      @vehicles = @vehicles.where("price >= 30000")
+    # elsif price == "All Prices"
     else
       @vehicles = @vehicles.where("price < ?", price)
     end
-    if bodystyle = "All"
+
+    if bodystyle == "All"
     else
       @vehicles = @vehicles.where(:bodystyle => bodystyle)
     end
-    if make
-      @vehicles = @vehicles.where(:make => make)
+    if make == 'All Makes'
+      @models = Vehicle.select(:model).distinct
+    else
+      @models = Vehicle.select(:model).where(:make => make)
     end
     if model
       @vehicles = @vehicles.where(:model => model)
     end
+    if sort == 'Price: Highest'
+      @vehicles = @vehicles.order('price desc')
+    end
+    if sort == 'Price: Lowest'
+      @vehicles = @vehicles.order('price asc')
+    end
+    if sort == 'Mileage: Highest'
+      @vehicles = @vehicles.order('mileage desc')
+    end
+    if sort == 'Mileage: Lowest'
+      @vehicles = @vehicles.order('mileage asc')
+    end
     @vehicles = @vehicles.page(params[:page])
-    #   @vehicles = Vehicle.where(year: range).where("price < ? AND mileage > 100000", price).where(:bodystyle => bodystyle, :make => make, :model => model).page(params[:page])
-    # elsif price == 30001
-    #   @vehicles = Vehicle.where(year: range).where("price > 30000 AND mileage < ?", mileage).where(:bodystyle => bodystyle, :make => make, :model => model).page(params[:page])
-    # elsif price == 30001 && mileage == 100001
-    #   @vehicles = Vehicle.where(year: range).where("price > 30000 AND mileage > 100000").where(:bodystyle => bodystyle, :make => make, :model => model).page(params[:page])
-    # else
-    #   @vehicles = Vehicle.where(year: range).where("price < ? AND mileage < ?", price, mileage).where(:bodystyle => bodystyle, :make => make, :model => model).page(params[:page])
-    # end
     render action: "index"
   end
 

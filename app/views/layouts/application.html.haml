@@ -31,7 +31,6 @@
           .container.nav-collapse
             %ul.nav
               %li= link_to "Admin Panel", rails_admin_path, method: :get
-
     .container
       .row-fluid
         .span3
@@ -41,29 +40,38 @@
           - make_uniq = Vehicle.all.map(&:make).sort.uniq
           -# - make_uniq.each { |vehicle| vehicle << {:onclick => 'javascript:alert(\'test\');'}
           - bodystyle = Vehicle.all.map(&:bodystyle).sort.uniq
+          - prices = [['Under $5,000',5000],['Under $10,000',10000],['Under $15,000',15000], ['Under $20,000', 20000], ['Under $25,000', 25000], ['Under $30,000', 30000], ['More than $30,000', 30001]]
           .well
             %legend Search
             = form_for :search, url: search_vehicles_path, method: :get, class: 'form-inline' do |f|
-              = f.select :price, [['Under $5,000',5000],['Under $10,000',10000],['Under $15,000',15000], ['Under $20,000', 20000], ['Under $25,000', 25000], ['Under $30,000', 30000], ['More than $30,000', 30001]]
+              - if params[:search] && params[:search][:price]
+                = f.select :price, prices, {selected: params[:search][:price]}
+              - else
+                = f.select :price, prices
               %select{:name => "search[make]", :onchange => 'javascript:window.location = \'/vehicles/search?\' + $(\'form\').serialize() + \'&search%5Bmake%5D=\' + this.value;'}
                 - if params[:search] && params[:search][:make]
-                  = options_for_select(make_uniq, params[:search][:make])
+                  = options_for_select(['All Makes'] + make_uniq, params[:search][:make])
                 - else
-                  = options_for_select(make_uniq)
+                  = options_for_select(['All Makes'] + make_uniq)
               - if params[:search] && params[:search][:make]
-                - models = Vehicle.where(:make => params[:search][:make]).all.map(&:model).sort.uniq
-                = f.select :model, models
+                = f.select :model, @models.map(&:model)
               - else
-                - models = Vehicle.where(:make => make_uniq[0]).all.map(&:model).sort.uniq
-                = f.select :model, models
+                -# - models = Vehicle.select(:model).distinct.map(&:model)
+                = f.select :model, [''], {}, { disabled: "true"}
               = f.label :year
               .row-fluid
                 .span5
-                  = f.select :start_year, years_uniq, class: 'input-small'
+                  - if params[:search] && params[:search][:start_year]
+                    = f.select :start_year, years_uniq, { class: 'input-small', selected: params[:search][:start_year] }
+                  - else
+                    = f.select :start_year, years_uniq, class: 'input-small'
                 .span1
                   To
                 .span5
-                  = f.select :end_year, years_uniq
+                  -if params[:search] && params[:search][:start_year]
+                    = f.select :end_year, years_uniq, { class: 'input-small', selected: params[:search][:end_year]}
+                  - else
+                    = f.select :end_year, years_uniq
               = f.label :mileage
               .row-fluid
                 .span8
@@ -138,6 +146,5 @@
         .span9
           = bootstrap_flash
           = yield
-          -# = debug(params)
 
 :coffee

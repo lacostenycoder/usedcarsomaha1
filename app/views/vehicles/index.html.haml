@@ -1,5 +1,8 @@
 .page-header
   %h1 Used Cars Omaha
+.span3.pull-right
+  %select{:name => "search[sort]", :onchange => 'javascript:window.location = \'/vehicles/search?\' + $(\'form\').serialize() + \'&search%5Bsort%5D=\' + this.value;'}
+    = options_for_select([['Price: Highest'], ['Price: Lowest'], ['Mileage: Highest'], ['Mileage: Lowest']])
 -@vehicles.each do |v|
   .row-fluid.vehicle_row_item
     .span3
