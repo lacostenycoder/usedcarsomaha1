@@ -49,7 +49,7 @@
               - else
                 = f.select :price, prices
               %select{:name => "search[make]", :onchange => 'javascript:window.location = \'/vehicles/search?\' + $(\'form\').serialize() + \'&search%5Bmake%5D=\' + this.value;'}
-                - if params[:search] && params[:search][:make]
+                - if params[:search] && params[:search][:make] && params[:search][:make] != 'All Makes'
                   = options_for_select(['All Makes'] + make_uniq, params[:search][:make])
                 - else
                   = options_for_select(['All Makes'] + make_uniq)

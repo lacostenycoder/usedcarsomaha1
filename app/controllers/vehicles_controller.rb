@@ -33,7 +33,7 @@ class VehiclesController < ApplicationController
     else
       mileage = 999999
     end
-    if params[:search] && params[:search][:make]
+    if params[:search] && params[:search][:make] && params[:search][:make] != 'All Makes'
       make = params[:search][:make]
     end
     if params[:search] && params[:search][:model]
