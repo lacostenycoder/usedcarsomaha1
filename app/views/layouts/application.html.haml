@@ -64,7 +64,7 @@
                   - if params[:search] && params[:search][:start_year]
                     = f.select :start_year, years_uniq, { class: 'input-small', selected: params[:search][:start_year] }
                   - else
-                    = f.select :start_year, years_uniq, class: 'input-small'
+                    = f.select :start_year, years_uniq, { selected: years_uniq[-1], class: 'input-small'}
                 .span1
                   To
                 .span5
