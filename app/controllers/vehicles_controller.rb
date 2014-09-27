@@ -33,7 +33,7 @@ class VehiclesController < ApplicationController
     else
       mileage = 999999
     end
-    if params[:search] && params[:search][:make] && params[:search][:make] != 'All Makes'
+    if params[:search] && params[:search][:make]
       make = params[:search][:make]
     end
     if params[:search] && params[:search][:model]
@@ -80,6 +80,7 @@ class VehiclesController < ApplicationController
       @models = Vehicle.select(:model).distinct
     else
       @models = Vehicle.select(:model).where(:make => make)
+      @vehicles = @vehicles.where(:make => make)
     end
     if model
       @vehicles = @vehicles.where(:model => model)
