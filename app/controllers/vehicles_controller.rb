@@ -73,12 +73,12 @@ class VehiclesController < ApplicationController
     end
 
     if bodystyle == "All"
-    else
+    elsif bodystyle
       @vehicles = @vehicles.where(:bodystyle => bodystyle)
     end
     if make == 'All Makes'
       @models = Vehicle.select(:model).distinct
-    else
+    elsif make
       @models = Vehicle.select(:model).where(:make => make)
       @vehicles = @vehicles.where(:make => make)
     end
