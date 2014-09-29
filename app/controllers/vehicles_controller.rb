@@ -79,7 +79,7 @@ class VehiclesController < ApplicationController
     if make == 'All Makes'
       @models = Vehicle.select(:model).distinct
     elsif make
-      @models = Vehicle.select(:model).where(:make => make)
+      @models = Vehicle.select(:model).where(:make => make).distinct
       @vehicles = @vehicles.where(:make => make)
     end
     if model
