@@ -1,6 +1,7 @@
 class Vehicle < ActiveRecord::Base
 require 'smarter_csv'
 
+default_scope { where(type: "Used") }
 # belongs_to :dealership
 
 # Necessary for using the "type column"
@@ -22,6 +23,10 @@ self.inheritance_column = nil
       else
         #attempt to avoid a typing error by converting the price to an integer before creating
         array[:price] = array[:price].to_i
+        array[:mileage] = array[:mileage].to_i
+        if @searchvehicle = Vehicle.where(:original_id => array[:original_id]) && @searchvehicle.count == 0
+          @searhvehicle.update(:type => "Sold")
+        end
         Vehicle.create( array.first )
       end
 
