@@ -43,18 +43,6 @@
             - makes = Vehicle.all.map(&:make).sort.each_with_object(Hash.new(0)){|word,counts| counts[word] += 1}
             - prices = [['Under $5,000',5000],['Under $10,000',10000],['Under $15,000',15000], ['Under $20,000', 20000], ['Under $25,000', 25000], ['Under $30,000', 30000], ['More than $30,000', 30001]]
             .well
-              %legend Search
-              %select{:name => "search[make]", :onchange => 'javascript:window.location = \'/vehicles/search?\' + $(\'form\').serialize() + \'&search%5Bmake%5D=\' + this.value;'}
-                - if params[:search] && params[:search][:make] && params[:search][:make]
-                  = options_for_select(['All Makes'] + make_uniq, params[:search][:make])
-                - else
-                  = options_for_select(['All Makes'] + make_uniq)
-              %br
-              - if params[:search] && params[:search][:make] && params[:search][:make] != 'All Makes'
-                = f.select :model, @models.map(&:model)
-              - else
-                = f.select :model, [''], {}, { disabled: "true" }
-            .well
               %legend Price
               = link_to "Under $5,000(#{Vehicle.where("price < 5000").count})", search_vehicles_path(search: {:price => 5000})
               %br
@@ -78,10 +66,28 @@
 
             .well
               %legend Make
-              - makes.each do |make, count|
-                = link_to "#{make}(#{count})", search_vehicles_path(search: {make: make})
-                %br
-
+              - if makes.count > 10
+                - makes[0..9].each do |make, count|
+                  = link_to "#{make}(#{count})", search_vehicles_path(search: {make: make})
+                  %br
+                %p#viewdetails.collapse
+                - makes[9..-1].each do |make, count|
+                  %a{"data-target" => "#viewdetails", "data-toggle" => "collapse"} View More »
+              - else
+                - makes.each do |make, count|
+                  = link_to "#{make}(#{count})", search_vehicles_path(search: {make: make})
+                  %br
+              %br
+              %select{:name => "search[make]", :onchange => 'javascript:window.location = \'/vehicles/search?\' + $(\'form\').serialize() + \'&search%5Bmake%5D=\' + this.value;'}
+                - if params[:search] && params[:search][:make] && params[:search][:make]
+                  = options_for_select(['All Makes'] + make_uniq, params[:search][:make])
+                - else
+                  = options_for_select(['All Makes'] + make_uniq)
+              %br
+              - if params[:search] && params[:search][:make] && params[:search][:make] != 'All Makes'
+                = f.select :model, @models.map(&:model)
+              - else
+                = f.select :model, [''], {}, { disabled: "true" }
             .well
               %legend Year
               - years_with_count.each do |year,count|
