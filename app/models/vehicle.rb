@@ -13,6 +13,7 @@ self.inheritance_column = nil
   end
 
   def self.import(file)
+    original_ids = Array.new
     n = SmarterCSV.process(file.path, {file_encoding: 'iso-8859-1', row_sep: :auto, :key_mapping => {:id => :original_id}}) do |array|
 
       vehicle = Vehicle.where(original_id: array.first[:original_id])
