@@ -24,8 +24,8 @@ self.inheritance_column = nil
         raise "There is more than 1 vehicle with the original_id of #{array.first[:original_id]}"
       else
         #attempt to avoid a typing error by converting the price to an integer before creating
-        array[:price] = array[:price].to_i
-        array[:mileage] = array[:mileage].to_i
+        array.first[:price] = array.first[:price].to_i
+        array.first[:mileage] = array.first[:mileage].to_i
         Vehicle.create( array.first )
       end
     end
