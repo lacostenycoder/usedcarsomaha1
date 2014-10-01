@@ -20,13 +20,13 @@ self.inheritance_column = nil
         vehicle.first.update_attributes(array.first)
       elsif vehicle.count > 1
         raise "There is more than 1 vehicle with the original_id of #{array.first[:original_id]}"
+      elsif vehicle.count == 0
+        vehicle.update(:type => "Sold")
+        vehicle.save
       else
         #attempt to avoid a typing error by converting the price to an integer before creating
         array[:price] = array[:price].to_i
         array[:mileage] = array[:mileage].to_i
-        if @searchvehicle = Vehicle.where(:original_id => array[:original_id]) && @searchvehicle.count == 0
-          @searhvehicle.update(:type => "Sold")
-        end
         Vehicle.create( array.first )
       end
 
