@@ -67,12 +67,14 @@
             .well
               %legend Make
               - if makes.count > 10
-                - makes[0..9].each do |make, count|
+                - makes.take(10).each do |make, count|
                   = link_to "#{make}(#{count})", search_vehicles_path(search: {make: make})
                   %br
                 %p#viewdetails.collapse
-                - makes[9..-1].each do |make, count|
-                  %a{"data-target" => "#viewdetails", "data-toggle" => "collapse"} View More »
+                  - makes[9..-1].each do |make, count|
+                    = link_to "#{make}(#{count})", search_vehicles_path(search: {make: make})
+                    %br
+                %a{"data-target" => "#viewdetails", "data-toggle" => "collapse"} View More »
               - else
                 - makes.each do |make, count|
                   = link_to "#{make}(#{count})", search_vehicles_path(search: {make: make})
