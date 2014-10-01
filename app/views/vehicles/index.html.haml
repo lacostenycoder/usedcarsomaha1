@@ -2,24 +2,25 @@
   %h1 Used Cars Omaha
 
 -@vehicles.each do |v|
-  .row-fluid.vehicle_row_item
-    .span3 
-      -if v.images.present?
-        = image_tag v.images.split("|").first
-    .span8.offset1
-      .row-fluid
-        .span12
-          %h3= v.year_make_model_trim
-      .row-fluid
-        .span3
-          %p.price= "$" + v.price if v.price
-        .span6
-          %p= number_with_delimiter(v.mileage, delimiter: ',') + " Miles" if v.mileage
-      .row-fluid
-        .span5
-          %p= "Dealer: " + v.dealership if v.dealership
-        .span7
-          %p.bold= "Check Availability: " + v.dealership_phone if v.dealership_phone
+  = link_to vehicle_path(v) do
+    .row-fluid.vehicle_row_item
+      .span3
+        -if v.images.present?
+          = image_tag v.images.split("|").first
+      .span8.offset1
+        .row-fluid
+          .span12
+            %h3= v.year_make_model_trim
+        .row-fluid
+          .span3
+            %p.price= "$" + v.price if v.price
+          .span6
+            %p= number_with_delimiter(v.mileage, delimiter: ',') + " Miles" if v.mileage
+        .row-fluid
+          .span5
+            %p= "Dealer: " + v.dealership if v.dealership
+          .span7
+            %p.bold= "Check Availability: " + v.dealership_phone if v.dealership_phone
   %hr
 
 .pull-right

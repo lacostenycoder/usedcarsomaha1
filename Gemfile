@@ -58,6 +58,7 @@ group :development, :test do
   gem 'pry-rails'
   gem 'binding_of_caller'
   gem 'better_errors'
+  gem 'awesome_print'
 
   gem 'growl'
   gem 'guard-ctags-bundler'
