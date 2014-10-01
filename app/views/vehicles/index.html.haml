@@ -1,9 +1,12 @@
 .page-header
   %h1 Used Cars Omaha
-
+.span3.pull-right
+  %select{:name => "search[sort]", :onchange => 'javascript:window.location = \'/vehicles/search?\' + $(\'form\').serialize() + \'&search%5Bsort%5D=\' + this.value;'}
+    = options_for_select([['Sort by Price or Mileage'], ['Price: Highest'], ['Price: Lowest'], ['Mileage: Highest'], ['Mileage: Lowest']])
+.clearfix.visible-lg
 -@vehicles.each do |v|
   .row-fluid.vehicle_row_item
-    .span3 
+    .span3
       -if v.images.present?
         = image_tag v.images.split("|").first
     .span8.offset1
@@ -12,7 +15,7 @@
           %h3= v.year_make_model_trim
       .row-fluid
         .span3
-          %p.price= "$" + v.price if v.price
+          %p.price= "$" + v.price.to_s if v.price
         .span6
           %p= number_with_delimiter(v.mileage, delimiter: ',') + " Miles" if v.mileage
       .row-fluid

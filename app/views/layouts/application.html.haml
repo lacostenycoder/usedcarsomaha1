@@ -31,34 +31,135 @@
           .container.nav-collapse
             %ul.nav
               %li= link_to "Admin Panel", rails_admin_path, method: :get
-
     .container
       .row-fluid
         .span3
-          - years = Vehicle.all.map(&:year).sort.reverse
-          - years_uniq = years.uniq
-          - years_with_count = years.each_with_object(Hash.new(0)){|word,counts| counts[word] += 1}
-          .well
-            %legend Search
-            = form_for :search, url: search_vehicles_path, method: :get, class: 'form-inline' do |f|
-              = f.label :year
+          = form_for :search, url: search_vehicles_path, method: :get, class: 'form-inline' do |f|
+            - years = Vehicle.all.map(&:year).sort.reverse
+            - years_uniq = years.uniq
+            - years_with_count = years.each_with_object(Hash.new(0)){|word,counts| counts[word] += 1}
+            - make_uniq = Vehicle.all.map(&:make).sort.uniq
+            - bodystyle = Vehicle.all.map(&:bodystyle).sort.uniq
+            - makes = Vehicle.all.map(&:make).sort.each_with_object(Hash.new(0)){|word,counts| counts[word] += 1}
+            - prices = [['Under $5,000',5000],['Under $10,000',10000],['Under $15,000',15000], ['Under $20,000', 20000], ['Under $25,000', 25000], ['Under $30,000', 30000], ['More than $30,000', 30001]]
+            .well
+              %legend Price
+              = link_to "Under $5,000(#{Vehicle.where("price < 5000").count})", search_vehicles_path(search: {:price => 5000})
+              %br
+              = link_to "Under $10,000(#{Vehicle.where("price < 10000").count})", search_vehicles_path(search: {:price => 10000})
+              %br
+              = link_to "Under $15,000(#{Vehicle.where("price < 15000").count})", search_vehicles_path(search: {:price => 15000})
+              %br
+              = link_to "Under $20,000(#{Vehicle.where("price < 20000").count})", search_vehicles_path(search: {:price => 20000})
+              %br
+              = link_to "Under $25,000(#{Vehicle.where("price < 25000").count})", search_vehicles_path(search: {:price => 25000})
+              %br
+              = link_to "Under $30,000(#{Vehicle.where("price < 30000").count})", search_vehicles_path(search: {:price => 30000})
+              %br
+              = link_to "Over $30,000(#{Vehicle.where("price > 30000").count})", search_vehicles_path(search: {:price => 30001})
+              %br
+              %br
+              - if params[:search] && params[:search][:price]
+                = f.select :price, prices, {selected: params[:search][:price]}, onchange: 'javascript:window.location = \'/vehicles/search?\' + $(\'form\').serialize() + \'&search%5Bprice%5D=\' + this.value;'
+              - else
+                = f.select :price, prices, {},  onchange: 'javascript:window.location = \'/vehicles/search?\' + $(\'form\').serialize() + \'&search%5Bprice%5D=\' + this.value;'
+
+            .well
+              %legend Make
+              - if makes.count > 10
+                - makes.take(10).each do |make, count|
+                  = link_to "#{make}(#{count})", search_vehicles_path(search: {make: make})
+                  %br
+                %p#viewdetails.collapse
+                  - makes.drop(10).each do |make, count|
+                    = link_to "#{make}(#{count})", search_vehicles_path(search: {make: make})
+                    %br
+                %a{"data-target" => "#viewdetails", "data-toggle" => "collapse"} View More »
+              - else
+                - makes.each do |make, count|
+                  = link_to "#{make}(#{count})", search_vehicles_path(search: {make: make})
+                  %br
+              %br
+              %select{:name => "search[make]", :onchange => 'javascript:window.location = \'/vehicles/search?\' + $(\'form\').serialize() + \'&search%5Bmake%5D=\' + this.value;'}
+                - if params[:search] && params[:search][:make] && params[:search][:make]
+                  = options_for_select(['All Makes'] + make_uniq, params[:search][:make])
+                - else
+                  = options_for_select(['All Makes'] + make_uniq)
+              %br
+              - if params[:search] && params[:search][:make] && params[:search][:make] != 'All Makes'
+                = f.select :model, @models.map(&:model), {}, { :onchange => 'javascript:window.location = \'/vehicles/search?\' + $(\'form\').serialize() + \'&search%5Bmodel%5D=\' + this.value;' }
+              - else
+                = f.select :model, [''], {}, disabled: "true"
+            .well
+              %legend Year
+              - years_with_count.each do |year,count|
+                = link_to "#{year}(#{count})", search_vehicles_path(search: {start_year: year, end_year: year})
+                %br
+              %br
               .row-fluid
                 .span5
-                  = f.select :start_year, years_uniq, class: 'input-small'
+                  - if params[:search] && params[:search][:start_year]
+                    = f.select :start_year, years_uniq, { class: 'input-small', selected: params[:search][:start_year] }
+                  - else
+                    = f.select :start_year, years_uniq, { selected: years_uniq[-1], class: 'input-small' }
                 .span1
                   To
                 .span5
-                  = f.select :end_year, years_uniq
-              = f.submit "Search", class: "btn btn-primary pull-right"
-          .well
-            %legend Year
-            - years_with_count.each do |year,count|
-              = link_to "#{year}(#{count})", search_vehicles_path(search: {start_year: year, end_year: year})
+                  -if params[:search] && params[:search][:end_year]
+                    = f.select :end_year, years_uniq, { class: 'input-small', selected: params[:search][:end_year] }, onchange: 'javascript:window.location = \'/vehicles/search?\' + $(\'form\').serialize() + \'&search%5Bend_year%5D=\' + this.value;'
+                  - else
+                    = f.select :end_year, years_uniq, {}, onchange: 'javascript:window.location = \'/vehicles/search?\' + $(\'form\').serialize() + \'&search%5Bend_year%5D=\' + this.value;'
+
+            .well
+              %legend Mileage
+              = link_to "Under 10,000(#{Vehicle.where("mileage < 10000").count})", search_vehicles_path(search: {:mileage => 10000})
               %br
+              = link_to "Under 20,000(#{Vehicle.where("mileage < 20000").count})", search_vehicles_path(search: {:mileage => 20000})
+              %br
+              = link_to "Under 30,000(#{Vehicle.where("mileage < 30000").count})", search_vehicles_path(search: {:mileage => 30000})
+              %br
+              = link_to "Under 40,000(#{Vehicle.where("mileage < 40000").count})", search_vehicles_path(search: {:mileage => 40000})
+              %br
+              = link_to "Under 50,000(#{Vehicle.where("mileage < 50000").count})", search_vehicles_path(search: {:mileage => 50000})
+              %br
+              = link_to "Under 60,000(#{Vehicle.where("mileage < 60000").count})", search_vehicles_path(search: {:mileage => 60000})
+              %br
+              = link_to "Under 70,000(#{Vehicle.where("mileage < 70000").count})", search_vehicles_path(search: {:mileage => 70000})
+              %br
+              = link_to "Under 80,000(#{Vehicle.where("mileage < 80000").count})", search_vehicles_path(search: {:mileage => 80000})
+              %br
+              = link_to "Under 90,000(#{Vehicle.where("mileage < 90000").count})", search_vehicles_path(search: {:mileage => 90000})
+              %br
+              = link_to "Under 100,000(#{Vehicle.where("mileage < 100000").count})", search_vehicles_path(search: {:mileage => 100000})
+              %br
+              = link_to "Over 100,000(#{Vehicle.where("mileage > 100000").count})", search_vehicles_path(search: {:mileage => 100001})
+              %br
+              %br
+                = f.select :mileage, [['All', 'All'], ['Under 10,000', 10000], ['Under 20,000', 20000],['Under 30,000', 30000], ['Under 40,000', 40000],['Under 50,000', 50000], ['Under 60,000', 60000],['Under 70,000', 70000], ['Under 80,000', 80000],['Under 90,000', 90000],['Under 100,000', 100000], ['Over 100,000', 100001]], {},  onchange: 'javascript:window.location = \'/vehicles/search?\' + $(\'form\').serialize() + \'&search%5Bmileage%5D=\' + this.value;'
+            .well
+              %legend Body Style
+              %br
+              = link_to "Convertible(#{Vehicle.where(:bodystyle => 'Convertible').count})", search_vehicles_path(search: {:bodystyle => "Convertible"})
+              %br
+              = link_to "Coupe(#{Vehicle.where(:bodystyle => 'Coupe').count})", search_vehicles_path(search: {:bodystyle => "Coupe"})
+              %br
+              = link_to "Pickup Truck(#{Vehicle.where(:bodystyle => 'Pickup Truck').count})", search_vehicles_path(search: {:bodystyle => "Pickup Truck"})
+              %br
+              = link_to "Van(#{Vehicle.where(:bodystyle => 'Van').count})", search_vehicles_path(search: {:bodystyle => "Van"})
+              %br
+              = link_to "Sedan(#{Vehicle.where(:bodystyle => 'Sedan').count})", search_vehicles_path(search: {:bodystyle => "Sedan"})
+              %br
+              = link_to "SUV(#{Vehicle.where(:bodystyle => 'SUV').count})", search_vehicles_path(search: {:bodystyle => "SUV"})
+              %br
+              = link_to "Wagon(#{Vehicle.where(:bodystyle => 'Wagon').count})", search_vehicles_path(search: {:bodystyle => "Wagon"})
+              %br
+              %br
+              - if params[:search] && params[:search][:bodystyle] && params[:search][:bodystyle] != 'All'
+                = f.select :bodystyle, ['All'] + bodystyle, {selected: params[:search][:bodystyle]}, onchange: 'javascript:window.location = \'/vehicles/search?\' + $(\'form\').serialize() + \'&search%5Bbodystyle%5D=\' + this.value;'
+              - else
+                = f.select :bodystyle, ['All'] + bodystyle, {},  onchange: 'javascript:window.location = \'/vehicles/search?\' + $(\'form\').serialize() + \'&search%5Bbodystyle%5D=\' + this.value;'
         .span9
           = bootstrap_flash
           = yield
 
-
 :coffee
-
