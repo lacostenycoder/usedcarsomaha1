@@ -87,9 +87,9 @@
                   = options_for_select(['All Makes'] + make_uniq)
               %br
               - if params[:search] && params[:search][:make] && params[:search][:make] != 'All Makes'
-                = f.select :model, @models.map(&:model)
+                = f.select :model, @models.map(&:model), {}, { :onchange => 'javascript:window.location = \'/vehicles/search?\' + $(\'form\').serialize() + \'&search%5Bmodel%5D=\' + this.value;' }
               - else
-                = f.select :model, [''], {}, { disabled: "true" }
+                = f.select :model, [''], {}, disabled: "true"
             .well
               %legend Year
               - years_with_count.each do |year,count|
