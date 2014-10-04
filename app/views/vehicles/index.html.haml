@@ -16,7 +16,7 @@
             %h3= v.year_make_model_trim
         .row-fluid
           .span3
-            %p.price= "$" + v.price if v.price
+            %p.price= "$" + number_with_delimiter(v.price.to_s) if v.price
           .span6
             %p= number_with_delimiter(v.mileage, delimiter: ',') + " Miles" if v.mileage
         .row-fluid

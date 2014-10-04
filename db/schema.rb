@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140827200659) do
+ActiveRecord::Schema.define(version: 20140925043532) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -80,11 +80,11 @@ ActiveRecord::Schema.define(version: 20140827200659) do
     t.string   "truck_bed"
     t.string   "msrp"
     t.string   "invoice"
-    t.string   "price"
+    t.integer  "price"
     t.string   "wholesale_price"
     t.string   "retail_price"
     t.string   "sale_price"
-    t.string   "mileage"
+    t.integer  "mileage"
     t.text     "comments"
     t.text     "options"
     t.text     "images"
